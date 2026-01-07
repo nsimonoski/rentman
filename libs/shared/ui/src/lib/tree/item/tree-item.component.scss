@@ -1,0 +1,43 @@
+:host {
+  padding: 8px 0px;
+
+  &:hover {
+    background-color: var(--rm-hover);
+  }
+
+  .remove-padding {
+    margin: -8px 0px;
+    padding: 8px 0px;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+
+    .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    .checkbox {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+
+      .selected {
+        font-weight: 600;
+      }
+    }
+
+    .expand {
+      margin-left: auto;
+      padding-right: 16px;
+    }
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}

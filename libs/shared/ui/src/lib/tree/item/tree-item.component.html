@@ -1,0 +1,34 @@
+<button
+  class="button-remove-styling item remove-padding"
+  [style.padding-left.px]="depth() * 16"
+  [ngClass]="{ 'cursor-pointer': hasChildren() }"
+  (click)="expand()"
+>
+  <button
+    class="button-remove-styling checkbox cursor-pointer remove-padding"
+    (click)="select(); $event.stopPropagation()"
+  >
+    <input
+      type="checkbox"
+      tabindex="-1"
+      [checked]="selected()"
+      [indeterminate]="indeterminate()"
+      (click)="$event.preventDefault()"
+    />
+
+    <span [ngClass]="{ selected: selected() }"> {{ node().text }}</span>
+  </button>
+  <span
+    aria-hidden="true"
+    class="material-symbols-outlined expand"
+    translate="no"
+  >
+    {{
+      node().children
+        ? node().expanded
+          ? 'keyboard_arrow_down'
+          : 'keyboard_arrow_up'
+        : ''
+    }}
+  </span>
+</button>

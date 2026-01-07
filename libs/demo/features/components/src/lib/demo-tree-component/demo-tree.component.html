@@ -1,0 +1,13 @@
+@if(store.isLoading()) {
+<p>Loading folders...</p>
+} @else {
+<rm-tree [nodes]="store.foldersTree()" />
+
+<div class="selected-ids">
+  Selected item IDs: {{ treeComponent().selectedNodes()() || [] }}
+</div>
+
+<button (click)="deselectAll()">Clear Selection</button>
+} @if(store.showSnackbar()) {
+<div class="snackbar">{{ store.message() }}</div>
+}

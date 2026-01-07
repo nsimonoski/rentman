@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    padding: 8px;
+    background-color: var(--rm-primary);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    width: 150px;
+  }
+
+  .snackbar {
+    font-weight: 600;
+    color: green;
+  }
+
+  .selected-ids {
+    font-weight: 600;
+    padding: 16px 0px;
+  }
+}

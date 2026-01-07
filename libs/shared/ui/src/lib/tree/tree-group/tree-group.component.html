@@ -1,0 +1,8 @@
+<!-- Duplicate values (itemId & parentId) -->
+@for (node of nodes(); track (node.text && node.value)) {
+
+<rm-tree-item [node]="node" [depth]="depth()" />
+
+@if (node.children && node.expanded) {
+<rm-tree-group [nodes]="node.children" [depth]="depth() + 1" />
+} }

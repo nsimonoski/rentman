@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+// variables
+:root {
+  --rm-hover: hsl(0, 0%, 96%);
+  --rm-primary: hsl(213, 97%, 53%);
+  --text-color: hsl(195, 3%, 24%);
+  --border-color: hsl(210, 0%, 89%);
+  --background-color: hsl(0, 0%, 100%);
+  --font-family: 'Source Sans Pro', sans-serif;
+  --font-size: 14px;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  font-size: var(--font-size);
+}
+
+// Accessibility fix for elements with click handlers (eslint:click-events-have-key-events)
+.button-remove-styling {
+  font-family: var(--font-family);
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:focus-visible {
+    outline: 1px solid var(--text-color);
+    outline-offset: 2px;
+  }
+}
