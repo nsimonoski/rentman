@@ -16,16 +16,21 @@ export const TreeStore = signalStore(
       setNodes(nodes: TreeNode[]): void {
         patchState(state, { nodes });
       },
-      expand(node: TreeNode): void {
+
+      expand(targetNode: TreeNode): void {
         const collapseNested = (node: TreeNode): TreeNode => ({
           ...node,
           expanded: false,
           children: node.children?.map((child) => collapseNested(child)),
         });
 
-        const expand = (nodes: TreeNode[], node: TreeNode): TreeNode[] =>
+        const expandNodes = (
+          nodes: TreeNode[],
+          nodeToUpdate: TreeNode
+        ): TreeNode[] =>
           nodes.map((n) => {
-            if (n.value === node.value) {
+            // Duplicate values (itemId & parentId). Compare by reference, immutable nodes
+            if (n === nodeToUpdate) {
               const expanded = !n.expanded;
 
               if (!expanded) {
@@ -35,17 +40,20 @@ export const TreeStore = signalStore(
               return { ...n, expanded };
             }
 
-            // nested level node expansion
+            // traverse the tree until the node is found.
             return {
               ...n,
-              children: n.children ? expand(n.children, node) : undefined,
+              children: n.children
+                ? expandNodes(n.children, nodeToUpdate)
+                : undefined,
             };
           });
 
-        const nodes = expand(state.nodes(), node);
+        const nodes = expandNodes(state.nodes(), targetNode);
         patchState(state, { nodes });
       },
-      select(node: TreeNode, selected: boolean): void {
+
+      select(targetNode: TreeNode, selected: boolean): void {
         const selectNested = (node: TreeNode): TreeNode => ({
           ...node,
           // node that have children have undefined selected state
@@ -53,21 +61,26 @@ export const TreeStore = signalStore(
           children: node.children?.map((child) => selectNested(child)),
         });
 
-        const updateNodes = (nodes: TreeNode[], node: TreeNode): TreeNode[] =>
+        const updateNodes = (
+          nodes: TreeNode[],
+          nodeToUpdate: TreeNode
+        ): TreeNode[] =>
           nodes.map((n) => {
-            if (n === node) {
+            // Duplicate values (itemId & parentId). Compare by reference, immutable nodes
+            if (n === nodeToUpdate) {
               return selectNested(n);
             }
 
-            // nested level node selection
+            // traverse the tree until the node is found
             return {
               ...n,
-              // node that have children have undefined selected state
-              selected: n.children?.length ? undefined : n.selected,
-              children: n.children ? updateNodes(n.children, node) : undefined,
+              children: n.children
+                ? updateNodes(n.children, nodeToUpdate)
+                : undefined,
             };
           });
-        const nodes = updateNodes(state.nodes(), node);
+
+        const nodes = updateNodes(state.nodes(), targetNode);
 
         patchState(state, { nodes });
       },
