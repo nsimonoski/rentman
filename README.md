@@ -1,6 +1,6 @@
 # Rentman
 
-NX Monorepo for building scalable Angular applications created as a part of job application - front-end assignment.
+NX Monorepo for building scalable Angular applications created as a part of job application - front-end assignment. The assignment took around half a day - around 9-10h to complete :)
 
 **Note:**
 This repository showcases a basic example of how I currently structure and architect Angular Applications.
